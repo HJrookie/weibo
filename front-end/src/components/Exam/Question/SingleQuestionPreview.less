@@ -1,0 +1,85 @@
+#single-question-wrapper {
+  .question-answer {
+    font-size: 12px;
+    //color: rgba(252,80,85,1);
+    line-height: 20px;
+    padding: 5px 20px;
+    min-height: 22px;
+    margin-top: 5px;
+    //background:rgba(252,80,85,0.27);
+  }
+  .com-question-body {
+    p {
+      vertical-align: top;
+      display: inline-block;
+    }
+    .ant-input {
+      vertical-align: top;
+      display: inline-block;
+      width: 70px;
+    }
+  }
+  .question-analysis,
+  .student-answer {
+    padding: 10px 15px;
+    font-size: 12px;
+    text-indent: 5px;
+    background: rgba(252, 80, 85, 0.11);
+  }
+  .question-createTime {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #a09e9e;
+  }
+  .question-img-wrapper {
+    padding-bottom: 10px;
+  }
+  .question-annex-wrapper {
+    padding: 0 0 10px;
+    display: flex;
+
+    .files-text {
+      white-space: nowrap;
+    }
+    .question-annex-fileList {
+      margin-left: 10px;
+      img {
+        height: 80px;
+        width: 80px;
+        cursor: pointer;
+        margin-left: 8px;
+        margin-bottom: 5px;
+      }
+
+      .ans-imgs + .ans-others {
+        margin-left: 8px;
+        margin-top: 5px;
+      }
+    }
+  }
+  .question-options {
+    .options_item {
+      padding: 2px 5px;
+      &:hover {
+        background: rgba(154, 158, 158, 0.2);
+      }
+      .label {
+        margin-left: 4px;
+        width: 20px;
+        display: inline-block;
+        text-align: center;
+      }
+    }
+  }
+  .question-score,
+  .teacher-comment {
+    margin-top: 10px;
+  }
+}
+
+// 覆盖 html,body 的通用的 img 的样式 (max-width: 100%)
+.ans-imgs-wrap {
+  img {
+    max-width: unset;
+  }
+}

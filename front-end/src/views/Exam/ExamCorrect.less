@@ -1,0 +1,311 @@
+#Exam-correct {
+  height: 100%;
+
+  .home-layout {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    main {
+      padding-bottom: 15px;
+      min-height: 100%;
+      flex: 1 0 auto;
+      background-color: #eff1f4;
+      padding-top: 10px;
+
+      & > .content {
+        margin: 0 auto;
+        width: 1200px;
+        min-height: 700px;
+        background-color: white;
+
+        #Exam {
+          //position: fixed;
+          //top: 0;
+          //right: 0;
+          //bottom: 0;
+          //left: 0;
+          z-index: 1000;
+          //height: 100%;
+          background-color: #f0f2f5;
+          overflow: auto;
+
+          main {
+            width: 1200px;
+            margin: 0 auto;
+
+            header {
+              display: flex;
+
+              .exam_title {
+                padding: 20px;
+                height: 80px;
+                width: 100%;
+                background-color: white;
+
+                .exam_title_name {
+                  display: flex;
+
+                  span {
+                    display: inline-block;
+                    line-height: 42px;
+                  }
+                }
+              }
+            }
+
+            .content {
+              display: flex;
+              justify-content: space-between;
+            }
+          }
+
+          #com-question {
+            width: 810px;
+            padding: 10px 20px 20px;
+            margin-top: 10px;
+            background-color: white;
+            line-height: 1.5;
+            font-size: 16px;
+
+            .question {
+              position: relative;
+              padding: 10px 10px 10px 30px;
+              margin-bottom: 20px;
+              border: 1px solid #e3e3e3;
+
+              .question_number {
+                display: inline-block;
+                width: 42px;
+                height: 35px;
+                background: url(//wkstatic.bdimg.com/static/gaokao/static/miti/tikupc/static/gufendetail/images/num-normal-bg_75a512f.png)
+                  center center no-repeat;
+                position: absolute;
+                left: -15px;
+                top: 8px;
+                font-size: 18px;
+                color: #fff;
+                line-height: 35px;
+                text-align: center;
+              }
+
+              .selected {
+                background: url(//wkstatic.bdimg.com/static/gaokao/static/miti/tikupc/static/gufendetail/images/num-bg_c6db428.png)
+                  center center no-repeat;
+              }
+
+              .stem {
+                p {
+                  vertical-align: top;
+                  display: inline-block;
+                }
+
+                .ant-input {
+                  vertical-align: top;
+                  display: inline-block;
+                  width: 70px;
+                }
+              }
+
+              .question_main {
+                .inner {
+                  width: 720px;
+
+                  .options {
+                    .options_item {
+                      padding: 2px 5px;
+
+                      &:hover {
+                        background: rgba(15, 153, 130, 0.2);
+                      }
+
+                      .label {
+                        width: 20px;
+                        display: inline-block;
+                        text-align: center;
+                      }
+                    }
+                  }
+
+                  .right_answer {
+                    font-size: 12px;
+                    color: rgba(252, 80, 85, 1);
+                    line-height: 20px;
+                    padding: 5px 20px;
+                    min-height: 22px;
+                    background: rgba(252, 80, 85, 0.27);
+                  }
+
+                  .student_answer {
+                    padding: 10px 15px;
+                    margin-top: 15px;
+                    font-size: 12px;
+                    text-indent: 5px;
+                    background: rgba(252, 80, 85, 0.11);
+                  }
+
+                  .analyse {
+                    padding: 10px 15px;
+                    font-size: 12px;
+                    text-indent: 5px;
+                    background: rgba(252, 80, 85, 0.11);
+                  }
+
+                  .teacher-comment {
+                    display: flex;
+                    margin-top: 10px;
+
+                    .title {
+                      display: block;
+                      width: 95px;
+                      line-height: 32px;
+                    }
+                  }
+
+                  .question-score {
+                    display: flex;
+                    margin-top: 10px;
+
+                    .title {
+                      display: block;
+                      width: 84px;
+                      line-height: 32px;
+                    }
+                  }
+                }
+              }
+            }
+
+            .selectedQue {
+              border: 1px solid #0f9982;
+            }
+
+            .showQuestion {
+              position: absolute;
+              top: 20px;
+              left: 0px;
+              width: 840px;
+              padding: 50px 10px;
+              height: 800px;
+              overflow: scroll;
+              border: 1px solid #e4ecf3;
+              box-shadow: 1px 2px 3px #f2f6f8;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #Exam-correct {
+    height: 100%;
+    &.role-S {
+      .home-layout {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        main {
+          padding-bottom: 15px;
+          min-height: 100%;
+          flex: 1 0 auto;
+          background-color: #eff1f4;
+          padding-top: 10px;
+
+          & > .content {
+            margin: 0 auto;
+            width: auto;
+            min-height: 700px;
+            background-color: white;
+
+            #Exam {
+              overflow: initial;
+              main {
+                width: auto;
+                margin: 0 auto;
+
+                .content {
+                  display: flex;
+                  justify-content: unset;
+                  flex-direction: column;
+                  #com-question {
+                    width: auto;
+                  }
+                  .submit-button {
+                    color: #fff2f2;
+                    width: calc(100% - 20px);
+                    background: #2889e2;
+                    height: 48px;
+                    margin: 0 auto;
+                    margin-bottom: 30px;
+                    text-align: center;
+                    line-height: 48px;
+                    font-size: 19px;
+                    border-radius: 5px;
+                    font-weight: 500;
+                  }
+                }
+                .count-and-slider {
+                  position: sticky;
+                  z-index: 1;
+                  top: 0px;
+
+                  background-color: #eff1f4;
+                  .slider-container {
+                    width: 330px;
+                    margin: 0 auto;
+                    height: 130px;
+                    &.pad {
+                      width: 80%;
+                    }
+                    .slick-slider.slick-initialized {
+                      height: 100%;
+                      .slick-arrow {
+                        &.slick-prev {
+                          left: -20px;
+                        }
+                        &.slick-next {
+                          right: -20px;
+                        }
+                      }
+                      .slick-list {
+                        height: 100%;
+                        .slick-track {
+                          padding-top: 5px;
+                          height: 100%;
+
+                          .slider-item {
+                            background: #d4d4d4;
+                            padding: 2px 2px;
+                            height: 50px;
+                            line-height: 50px;
+                            text-align: center;
+                            border-radius: 10px;
+                            background-clip: content-box;
+
+                            &.is-answered,
+                            &.is-correct {
+                              background-color: rgb(15, 153, 130);
+                            }
+                            &.is-wrong {
+                              background-color: rgb(252, 80, 85);
+                            }
+                          }
+                        }
+                      }
+                      .slick-dots {
+                        bottom: 0px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
