@@ -27,3 +27,12 @@ export function getLongBlog(data: Record<string, any>): Promise<HttpResponse<Rec
     });
 }
 
+
+export function getUserInfo(data: Record<string, any>): Promise<HttpResponse<Record<string, any>>> {
+    return axios.request({
+        url: "https://weibo.com/ajax/profile/info",
+        method: "get",
+        params: data,
+        headers: header
+    });
+}

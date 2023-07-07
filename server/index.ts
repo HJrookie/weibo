@@ -21,29 +21,7 @@ const server = app.listen(3000, () =>
   console.log(` 🚀 Server ready at: http://localhost:3000`)
 );
 
-async function addNewData() {
-  // 新增
-  await prisma.user.create({
-    data: {
-      name: "cc",
-      email: "cc@prisma.io",
-      posts: {
-        create: { title: "Hello World" },
-      },
-      profile: {
-        create: { bio: "I like turtles" },
-      },
-    },
-  });
 
-  const allUsers = await prisma.user.findMany({
-    include: {
-      posts: true,
-      profile: true,
-    },
-  });
-  console.dir(allUsers, { depth: null });
-}
 
 // async function update() {
 //   // 更新
@@ -75,20 +53,6 @@ async function addNewData() {
 
 // adddNewVideo();
 
-async function updateVideoVvid() {
-  const result = await prisma.video.findMany({});
-  result.map(async (item) => {
-    console.log(item.id);
 
-    await prisma.video.update({
-      where: {
-        id: item.id,
-      },
-      data: {
-        vvId: getVvidFromCode(item.code),
-      },
-    });
-  });
-}
 
 // updateVideoVvid();

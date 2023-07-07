@@ -6,26 +6,32 @@ datasource db {
 model Blog {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
+  blogCreateAt  BigInt @default(0)
   updatedAt DateTime @updatedAt
-  title     String
-  content   String?
+  content   String? @db.Text
   isLongText Boolean @default(false)
-  viewCount Int      @default(0)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
 
 model Profile {
   id     Int     @id @default(autoincrement())
+
   user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+  userId Int     @unique 
+  
+
+  uid  String @unique  @default(uuid())// 微博的 uid
+
+  name     String @default("")   // 昵称
+  gender     String  @default("") // 性别
+  followersCount Int  @default(0) // 粉丝量
+  description String  @default("")//个人描述
+  avatar Image? // 头像   11关系中没有 relation的这个必须是 可选的
 }
 
 model User {
   id       Int      @id @default(autoincrement())
-  email    String   @unique
-  name     String?
-  prevName String   @default("") // 曾用名
   blogs    Blog[]
   profile  Profile?
   videos   Video[]
@@ -33,30 +39,14 @@ model User {
 
 model Image {
   id                  Int    @id @default(autoincrement())
-  src                 String
-  name                String
-  previewImageVideoId Int // 预览图所属视频id
-  previewVideo        Video  @relation("PreviewImgs", fields: [previewImageVideoId], references: [id])
-
-  fengmianVideoId Int   @unique
-  fengmianVideo   Video @relation("FemgmianImg", fields: [fengmianVideoId], references: [id]) // 一对一的       
+  profileInfo   Profile  @relation(fields: [profileId],references: [id])
+  profileId Int  @unique
 }
 
 model Video {
   id          Int      @id @default(autoincrement())
-  vvId        String  @default("")// 视频的唯一id  
-  code        String //编码 可能冲突
-  // uuid    String  @unique  // 唯一编码 冗余
+
   actors      User[]
-  fielPath    String
-  size        String
-  note        String   @default("") // 备注
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  // 0 -> 初始状态 , 1 图片导入失败
-  status      Int      @default(0)
-  fengmian    Image?   @relation("FemgmianImg")
-  previewImgs Image[]  @relation("PreviewImgs")
 }
 
 generator client {
