@@ -10,12 +10,18 @@ const studentExamList = {
   "updatedAt": "2023-02-07T07:47:38.022Z",
 };
 
-const actorData = {
-  "id": 1,
-  "email": "alice@prisma.io",
-  "name": "Alice",
-  "prevName": "",
-};
+const UserData = {
+  "id": 2,
+  "profile": {
+    "id": 2,
+    "userId": 2,
+    "uid": "2353799033",
+    "name": "关自不在",
+    "gender": "f",
+    "followersCount": 82063,
+    "description": "佛理，医理，命理，理事无碍，事事无碍。工号：关自不在。"
+  }
+}
 
 export type StudentExamListType = getObjectType<typeof studentExamList>;
-export type actorListType = getObjectType<typeof actorData>;
+export type UserListType = getObjectType<typeof UserData>;

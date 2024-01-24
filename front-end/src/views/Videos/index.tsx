@@ -133,7 +133,7 @@ const ExamList: React.FC = () => {
         <Col>
         <Space>
             <Button onClick={() => refresh()}>
-              同步 <PlusCircleOutlined />{" "}
+              同步微博 <PlusCircleOutlined />{" "}
             </Button>
             <Button onClick={() => addOrUpdate()}>新增</Button>
           </Space>

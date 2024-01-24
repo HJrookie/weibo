@@ -11,7 +11,7 @@ import { PaperType, Status } from "@/utils/dict";
 import ActionDropdown from "@/components/ActionDropdown";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { actorListType } from "@/utils/types";
+import { UserListType } from "@/utils/types";
 import { Drawer } from "antd";
 
 interface DataType {
@@ -76,17 +76,23 @@ const Actors: React.FC = () => {
     setOpen(true);
     setDetail(info);
   };
-  const columns: ColumnsType<actorListType> = [
+  const columns: ColumnsType<UserListType> = [
     {
-      title: "姓名",
+      title: "昵称",
       dataIndex: "name",
       align: "center",
       ellipsis: true,
+      render: (text, record) => {
+        return <div>{record?.profile?.name}</div>;
+      },
     },
     {
-      title: "备注",
+      title: "描述",
       dataIndex: "note",
       align: "center",
+      render: (text, record) => {
+        return <div>{record?.profile?.description}</div>;
+      },
     },
 
     {

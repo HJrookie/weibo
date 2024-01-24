@@ -5,7 +5,7 @@ import MainLayout from "@/views/Layout";
 import Videos from "@/views/Videos";
 import PaperList from "../views/PaperList";
 import QuestionList from "../views/QuestionList";
-import Actors from "../views/Actors";
+import Users from "../views/Users";
 import Dashboard from "@/views/Dashboard";
 import Exam from "@/views/Exam/Exam";
 
@@ -31,8 +31,8 @@ export const router = createHashRouter([
         element: <Videos />,
       },
       {
-        path: "actors",
-        element: <Actors />,
+        path: "users",
+        element: <Users />,
       },
       {
         path: "exam/answer/:id",
