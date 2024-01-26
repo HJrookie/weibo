@@ -5,7 +5,7 @@ const { Option } = Select;
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { getVideos, getVieeoDetail, syncVideos } from "@/api/exam";
+import { getVideos, getVieeoDetail, syncWeibos } from "@/api/exam";
 import { PaperType, Status } from "@/utils/dict";
 import ActionDropdown from "@/components/ActionDropdown";
 import moment from "moment";
@@ -41,18 +41,18 @@ const ExamList: React.FC = () => {
   };
 
   const refresh = () => {
-    syncVideos().then((res) => {});
+    syncWeibos().then((res) => {});
   };
 
   useEffect(() => {
-    // setLoading(true);
-    // const data = { page, pageSize };
-    // getVideos(data).then((res) => {
-    //   console.log("re", res);
-    //   setTableData(res?.data?.data ?? []);
-    //   setTotal(res?.data?.total ?? 0);
-    //   setLoading(false);
-    // });
+    setLoading(true);
+    const data = { page, pageSize };
+    getVideos(data).then((res) => {
+      console.log("re", res);
+      setTableData(res?.data?.data ?? []);
+      setTotal(res?.data?.total ?? 0);
+      setLoading(false);
+    });
   }, [page, pageSize]);
 
   interface DataType {
@@ -135,6 +135,11 @@ const ExamList: React.FC = () => {
             <Button onClick={() => refresh()}>
               同步微博 <PlusCircleOutlined />{" "}
             </Button>
+
+            <Button onClick={() => refresh()}>
+              同步微博 <PlusCircleOutlined />
+            </Button>
+
             <Button onClick={() => addOrUpdate()}>新增</Button>
           </Space>
         </Col>

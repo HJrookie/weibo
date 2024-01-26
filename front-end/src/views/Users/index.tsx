@@ -1,26 +1,21 @@
 import React, { useState, useEffect, createRef } from "react";
-import { AutoComplete, Button, Card, Cascader, Checkbox, Col, Form, Input, InputNumber, Row, Select } from "antd";
+import { AutoComplete, Button, Card, Cascader, Checkbox, Col, Form, Input, InputNumber, message, Row, Select } from "antd";
 
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined,SearchOutlined,SyncOutlined } from "@ant-design/icons";
 // import AddOrUpdate from "./add-or-update";
 const { Option } = Select;
 import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { getUsers, getVideos, syncUsers } from "@/api/exam";
+import { getUsers, getVideos, syncUser, } from "@/api/exam";
 import { PaperType, Status } from "@/utils/dict";
 import ActionDropdown from "@/components/ActionDropdown";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { UserListType } from "@/utils/types";
 import { Drawer } from "antd";
+import AddUserModal from "./AddUserModal";
 
-interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-  tags: string[];
-}
+
 
 const Actors: React.FC = () => {
   const [tableData, setTableData] = useState<any[]>([]);
@@ -33,12 +28,8 @@ const Actors: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [detail, setDetail] = useState(null);
 
-  const refresh = () => {
-    syncUsers().then((res) => {});
-  };
 
-  const addOrUpdate = (data?: DataType) => {
-    console.log(1, data);
+  const addOrUpdate = (data?: UserListType) => {
     addOrUpdateRef.current?.init(data);
   };
 
@@ -48,8 +39,16 @@ const Actors: React.FC = () => {
     setPageSize(pageSize);
   };
 
-  useEffect(() => {
-    setLoading(true);
+const syncUserListType = (user:UserListType)=>{
+  syncUser({uid:user.profile?.uid}).then(()=>{
+    message.success({
+      content:'Success'
+    })
+  })
+}
+
+const initData = ()=>{
+  setLoading(true);
     const data = { page, pageSize };
     getUsers(data).then((res) => {
       console.log("re", res);
@@ -57,15 +56,13 @@ const Actors: React.FC = () => {
       setTotal(res?.data?.total ?? 0);
       setLoading(false);
     });
+}
+
+  useEffect(() => {
+    initData()
   }, [page, pageSize]);
 
-  interface DataType {
-    key: string;
-    name: string;
-    age: number;
-    address: string;
-    tags: string[];
-  }
+
 
   const onClose = () => {
     setDetail(null);
@@ -83,7 +80,7 @@ const Actors: React.FC = () => {
       align: "center",
       ellipsis: true,
       render: (text, record) => {
-        return <div>{record?.profile?.name}</div>;
+        return <a href={`https://weibo.com/u/${record.profile.uid}`}>{record.profile.name}</a>;
       },
     },
     {
@@ -94,30 +91,32 @@ const Actors: React.FC = () => {
         return <div>{record?.profile?.description}</div>;
       },
     },
-
+    {
+      title: "粉丝",
+      dataIndex: "note",
+      width:100,
+      align: "center",
+      render: (text, record) => {
+        return <div>{  ((record?.profile?.followersCount??0)/(10**4)  ).toFixed(2)+ 'w'}</div>;
+      },
+    },
+    {
+      title: "Blog 地址",
+      align: "center",
+      width:100,
+      render: (text, record) => {
+        return <a href={record.profile.blogAddress}>Blog</a>;
+      },
+    },
     {
       title: "操作",
-      dataIndex: "action",
-      key: "action",
+      width:200,
+
       align: "center",
-      width: 240,
       render: (text, record) => {
-        // const menu = [
-        //   {
-        //     label: "开始答题",
-        //     onClick: () => startExam(record.id),
-        //   },
-        //   {
-        //     label: "查看试卷",
-        //     onClick: () => window.open(`/#/exam/preview/${record.id}/${record.resultId}`),
-        //   },
-        // ];
-        // return <ActionDropdown menu={menu} />;
-        return (
-          <Button type="link" onClick={() => editCol(record)}>
-            编辑
-          </Button>
-        );
+        return <Button onClick={() => syncUserListType(record)}>
+         <SyncOutlined />
+      </Button>
       },
     },
   ];
@@ -127,10 +126,11 @@ const Actors: React.FC = () => {
       <Row justify={"end"}>
         <Col>
           <Space>
-            <Button onClick={() => refresh()}>
-              同步 <PlusCircleOutlined />{" "}
-            </Button>
             <Button onClick={() => addOrUpdate()}>新增</Button>
+            <Button onClick={() => initData()}>
+              查询<SearchOutlined />
+            </Button>
+
           </Space>
         </Col>
       </Row>
@@ -149,26 +149,10 @@ const Actors: React.FC = () => {
         }}
       />
 
-      <Drawer title="Info" placement="right" onClose={onClose} open={open} size="large">
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+      {/* @ts-ignore */}
+      <AddUserModal onRef={addOrUpdateRef} refresh={()=>initData()} ></AddUserModal>
 
-        <div id="videoInfo">
-          <div className="imgAndInfo">
-            <div className="img"></div>
-            <div className="info">
-              <Card title="Default size card" extra={<a href="#"></a>} style={{ width: 300 }}>
-                <p>Card content</p>
-                <p>Card content</p>
-                <p>Card content</p>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </Drawer>
 
-      {/* <AddOrUpdate onRef={addOrUpdateRef}></AddOrUpdate> */}
     </div>
   );
 };

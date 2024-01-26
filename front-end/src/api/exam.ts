@@ -14,16 +14,28 @@ export function getVideos(params: any): Promise<CommonObject> {
   });
 }
 
-export function syncUsers(): Promise<CommonObject> {
+
+export function getWeibos(params: any): Promise<CommonObject> {
+  return service({
+    url: "/weibos",
+    method: "POST",
+    data: params,
+  });
+}
+
+
+export function syncUser(data: Record<string, any>): Promise<CommonObject> {
   return service({
     url: "/syncUser",
     method: "POST",
+    data
   });
 }
-export function syncVideos(): Promise<CommonObject> {
+export function syncWeibos(data :Record<string, any>): Promise<CommonObject> {
   return service({
     url: "/syncWeibo",
     method: "POST",
+    data
   });
 }
 

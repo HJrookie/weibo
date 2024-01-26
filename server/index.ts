@@ -4,7 +4,7 @@ const fs = require("fs");
 import express, { query } from "express";
 const path = require("path");
 var cors = require("cors");
-import userApi from "./routers/user";
+import userApi from "./routers/user/user";
 import videoApi from "./routers/video";
 import weiboApi from "./routers/weibo/weibo";
 const prisma = new PrismaClient();
@@ -20,6 +20,8 @@ app.use("/api", weiboApi);
 const server = app.listen(3000, () =>
   console.log(` 🚀 Server ready at: http://localhost:3000`)
 );
+
+
 
 
 

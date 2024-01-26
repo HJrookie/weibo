@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "@/utils";
-import {message, Modal} from "antd";
+import { message, Modal } from "antd";
 
 console.log(33, import.meta.env);
 let downloadLoadingInstance;
@@ -76,7 +76,7 @@ const responseFulfilledHandler = (res: any) => {
   }
 };
 const responseRejectedHandler = (error: any) => {
-  console.log("err" + error);
+  // console.log("err" + error);
   let { message } = error;
   if (message == "Network Error") {
     message = "后端接口连接异常";

@@ -43,7 +43,7 @@ const MainLayout = (props: any) => {
     getItem("dashboard", "dashboard", <AppstoreOutlined />),
     // getItem("Navigation Two", "sub2", <AppstoreOutlined />, [getItem("Option 5", "question"), getItem("Option 6", "paper")]),
     getItem("Navigation Three", "333", <SettingOutlined />, 
-    [getItem("Video List", "videos"), getItem("Users", "users"),]),
+    [getItem("Video List", "videos"), getItem("Users", "users"), getItem("Weibos", "weibos"),]),
   ];
 
   return (

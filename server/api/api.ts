@@ -1,4 +1,4 @@
-import header from "../header";
+import header, { downloadImageHeader } from "../header";
 
 const axios = require("axios");
 
@@ -35,4 +35,19 @@ export function getUserInfo(data: Record<string, any>): Promise<HttpResponse<Rec
         params: data,
         headers: header
     });
+}
+
+
+
+export const downloadImage = (url: string) => {
+
+    return axios.request({
+        method: 'get',
+        maxBodyLength: Infinity,
+        responseType: 'arraybuffer',
+        url: url,
+        headers: {
+            ...downloadImageHeader
+        }
+    })
 }

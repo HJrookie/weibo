@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export function isVideoFile(fileName: string) {
   const suffixs = [
     ".mp4",
@@ -34,3 +36,5 @@ export function getVvidFromCode(s: string) {
   s = s.replace(/=/, "-");
   return (s.match(/([a-zA-Z]){2,5}[-=0]{1,5}([0-9]+)/g)?.[0] ?? "").toLocaleUpperCase();
 }
+
+

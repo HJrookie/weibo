@@ -6,12 +6,14 @@ datasource db {
 model Blog {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  blogCreateAt  BigInt @default(0)
+  blogCreateAt DateTime   @default(now())
   updatedAt DateTime @updatedAt
   content   String? @db.Text
   isLongText Boolean @default(false)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
+
+  blogImages Image[]
 }
 
 model Profile {
@@ -27,7 +29,8 @@ model Profile {
   gender     String  @default("") // 性别
   followersCount Int  @default(0) // 粉丝量
   description String  @default("")//个人描述
-  avatar Image? // 头像   11关系中没有 relation的这个必须是 可选的
+  blogAddress String  @default("")  //博客地址
+  // avatar Image? // 头像   11关系中没有 relation的这个必须是 可选的
 }
 
 model User {
@@ -39,8 +42,13 @@ model User {
 
 model Image {
   id                  Int    @id @default(autoincrement())
-  profileInfo   Profile  @relation(fields: [profileId],references: [id])
-  profileId Int  @unique
+  // profileInfo   Profile  @relation(fields: [profileId],references: [id])
+  // profileId Int  @unique
+  url String @default("")
+  fileName String @default("")
+  
+  belongToBlog  Blog @relation(fields: [blogId],references: [id])
+  blogId Int @unique
 }
 
 model Video {

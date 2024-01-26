@@ -1,4 +1,4 @@
-const cookie = 'login_sid_t=1f06b58f90f1f7f7bd16759db6b2d7e7; cross_origin_proto=SSL; _s_tentry=passport.weibo.com; Apache=3466355927550.6504.1661334537529; SINAGLOBAL=3466355927550.6504.1661334537529; ULV=1661334537559:1:1:1:3466355927550.6504.1661334537529:; XSRF-TOKEN=l_DSnFBZPcPDzwH_AxuMnIDl; WBtopGlobal_register_version=2022101810; UPSTREAM-V-WEIBO-COM=35846f552801987f8c1e8f7cec0e2230; SSOLoginState=1684203536; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWDYrd5hSa5Pfd_qzyE4RP55JpX5KMhUgL.Fo-NeoeX1KqNeh.2dJLoI0YLxKBLBonL1h5LxKqL1-zLBozLxK-LB-BLBKBLxK.LBonLB.qLxK-L1h-LBK-LxKqLBKzLBKqLxKqL1-BLBK-t; ALF=1694050402; SCF=AmOk5zPMKliQpWoWuOLAiSYsHB65AciX2lt07iQy9Oq0MppqsZwu8pnX1nZU7WuUvDXFSYtqlEOYA8Ke2QbvawE.; SUB=_2A25J1eszDeRhGeNJ6VEV-SjLyzWIHXVqo1v7rDV8PUNbmtAGLXXukW9NS_JDM5p-22wwlIRr3FTUzxGaAlW-YEvX; WBPSESS=nLYDcTTZPPS4-Kwz2riLykCEJdx2db_oUAF9VH-ms1uRzGgwM1njTnnXwY0PkscEtX6NNIfli-CrWBSiXkuhXy-0jsdSvxznh-w1Wom5h1NWalwnGXQcx-lo93QDV2bClklfKnAzTjrXa7cfqnGLiA==';
+const cookie = 'login_sid_t=1f06b58f90f1f7f7bd16759db6b2d7e7; cross_origin_proto=SSL; _s_tentry=passport.weibo.com; Apache=3466355927550.6504.1661334537529; XSRF-TOKEN=l_DSnFBZPcPDzwH_AxuMnIDl; WBtopGlobal_register_version=2022101810; UPSTREAM-V-WEIBO-COM=35846f552801987f8c1e8f7cec0e2230; ULV=1692675410333:1:1:1:3466355927550.6504.1661334537529:; UOR=,,www.google.com; SINAGLOBAL=3466355927550.6504.1661334537529; SCF=AmOk5zPMKliQpWoWuOLAiSYsHB65AciX2lt07iQy9Oq01VNvaH9i7XUs0Ct-5b4xMiiXp_AALmtY8mvXkGHDn6M.; SSOLoginState=1704333140; WBPSESS=nLYDcTTZPPS4-Kwz2riLykCEJdx2db_oUAF9VH-ms1uRzGgwM1njTnnXwY0PkscE4L_ZHbTwEzq-fdYAE5I_1zH5KHvkbAS4G3aOStmxIpavBzX88Bq-c7_T1fkdVRO6XZKaz1bs4K-3nzR-dCCfug==; ALF=1708739864; SUB=_2A25ItbBIDeRhGeNJ6VEV-SjLyzWIHXVry02ArDV8PUJbkNAGLUL-kW1NS_JDMyv4fJ_RUvS9BCRRR7dnIvC4Hp6L; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWDYrd5hSa5Pfd_qzyE4RP55JpX5KMhUgL.Fo-NeoeX1KqNeh.2dJLoI0YLxKBLBonL1h5LxKqL1-zLBozLxK-LB-BLBKBLxK.LBonLB.qLxK-L1h-LBK-LxKqLBKzLBKqLxKqL1-BLBK-t';
 
 const header = {
     authority: "weibo.com",
@@ -22,3 +22,21 @@ const header = {
     cookie,
 };
 export default header;
+
+
+export const downloadImageHeader =  {
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "accept-language": "zh-CN,zh;q=0.9",
+    "cache-control": "no-cache",
+    "pragma": "no-cache",
+    "sec-ch-ua": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"macOS\"",
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "cross-site",
+    "sec-fetch-user": "?1",
+    "upgrade-insecure-requests": "1",
+    "Referer": "https://weibo.com/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  }

@@ -1,4 +1,6 @@
 import Cookies from "js-cookie";
+import moment from "moment";
+import { weiboFaceParse } from 'weibo-face'
 
 const TokenKey = "Token";
 
@@ -37,15 +39,18 @@ let throttle = (fn, delay = 1000) => {
   };
 };
 //防抖函数
-let debounce = (fn, wait = 500) => {
-  let timeout;
-  return function (...args) {
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      fn.apply(this, args);
-    }, wait);
+export const debounce = function (func, delay) {
+  let timer: number | null = null;
+  return function () {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      console.log(33, arguments);
+      func.apply(this, [...arguments]); // 这里的 arguments 主要是 滚动Event,callee
+    }, delay);
   };
-};
+}
 //只能是数字，限制大小
 let numRules = (val, min, max) => {
   if (val === "" || val == null) {
@@ -155,3 +160,13 @@ const utils = {
 };
 export default utils;
 
+export function formatDate(time: string) {
+  return moment(time).format('YYYY-MM-DD HH:MM')
+}
+
+export const parstBlogContent = (v: string | null | undefined) => {
+  if (!v) {
+    return '';
+  }
+  return v.includes('<img') ? v : weiboFaceParse(v)
+}
