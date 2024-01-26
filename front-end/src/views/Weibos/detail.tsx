@@ -2,6 +2,7 @@ import React, { useState, useImperativeHandle } from "react";
 import { AutoComplete, Button, Cascader, Checkbox, Col, Form, Input, InputNumber, notification, Row, Modal, Select } from "antd";
 import { RichText } from "@/components/RichText/richText";
 import { BlogItem } from "@/utils/types";
+import { Image } from 'antd';
 
 
 const AddOrUpdate: React.FC = (props: { onRef?: React.RefObject<any> }) => {
@@ -31,24 +32,21 @@ const AddOrUpdate: React.FC = (props: { onRef?: React.RefObject<any> }) => {
   };
 
   return (
-    <Modal title="Preview" open={isModalOpen} width={900} onOk={handleCancel} onCancel={handleCancel} destroyOnClose >
+    <Modal  wrapClassName="preview-wrapper" title="Preview" open={isModalOpen} width={680} onOk={handleCancel} onCancel={handleCancel} destroyOnClose >
       {isModalOpen ? <RichText content={blogData?.content ?? ''}></RichText> : ''}
 
-      <Row gutter={[16, 16]}>
-        {
-          blogData?.blogImages?.map(img => {
-            return <Col span={6} key={img.id}>
+      <Row gutter={[8, 8]} className={'detail-imgs'}>
+        <Image.PreviewGroup>
+          {
+            blogData?.blogImages?.map(img => {
+              return <Col span={8} key={img.id}>
+                <Image width={'100%'} src={img.url} />
+                {/* <img src={img.url}  className="detail-img" ></img> */}
+              </Col>
+            })
+          }
 
-              <img src={img.url}  ></img>
-
-            </Col>
-          })
-        }
-
-        <div className="ttt">
-          2222222
-        </div>
-
+        </Image.PreviewGroup>
       </Row>
 
     </Modal>

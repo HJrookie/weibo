@@ -7,17 +7,19 @@ var cors = require("cors");
 import userApi from "./routers/user/user";
 import videoApi from "./routers/video";
 import weiboApi from "./routers/weibo/weibo";
+import ImageProxyApi from "./routers/imageProxy";
 const prisma = new PrismaClient();
 const app = express();
 app.use(cors());
+export const port = 3000;
 
 app.use(express.json());
 
 app.use("/api", userApi);
 app.use("/api", videoApi);
 app.use("/api", weiboApi);
-
-const server = app.listen(3000, () =>
+app.use("/api", ImageProxyApi);
+const server = app.listen(port, () =>
   console.log(` 🚀 Server ready at: http://localhost:3000`)
 );
 

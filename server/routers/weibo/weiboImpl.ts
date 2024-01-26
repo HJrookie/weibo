@@ -1,6 +1,7 @@
 import { PrismaClient, Profile, User } from "@prisma/client";
 import { downloadImage } from "../../api/api";
 import { downloadImageHeader } from "../../header";
+import { replaceImageUrl } from "../../utils";
 const fs = require('fs')
 const prisma = new PrismaClient();
 
@@ -41,14 +42,17 @@ export const checkBlog = async (content: string, blogInfo: Record<string, any>, 
     const imageInfos = blogInfo.pic_infos ?? {};
     for (let [k, imageDetail] of Object.entries<Record<string, any>>(imageInfos)) {
         let url = imageDetail.largest.url as string;
+
         console.log(111111, url)
         // const fileName = `${user.profile?.name}-${blogInfo.mblogid}-${url}`;
         const fileName = `${blogInfo.mblogid}.jpg`;
 
-        await saveImage(user, blogInfo, url, fileName)
+        // 图片暂时不存储到本地
+        // await saveImage(user, blogInfo, url, fileName)  
         await prisma.image.create({
             data: {
-                url: imageDetail.largest.url as string,
+                url: replaceImageUrl(url),
+                originalUrl: url,
                 fileName,
                 belongToBlog: {
                     connect: {

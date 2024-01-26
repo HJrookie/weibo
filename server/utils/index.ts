@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { port } from '..';
 
 export function isVideoFile(fileName: string) {
   const suffixs = [
@@ -38,4 +39,11 @@ export function getVvidFromCode(s: string) {
 }
 
 
-export const sleep = (t:number)=>new Promise<void>(res=>setTimeout(() => res(), t*1000))
+export const sleep = (t: number) => new Promise<void>(res => setTimeout(() => res(), t * 1000))
+
+// 解决 403 问题
+export const replaceImageUrl = (imgUrl: string) => {
+  // 原始地址: https://wx1.sinaimg.cn/large/63eaf69fly1hjwmahh23bj20u014mn0w.jpg
+  // 替换后:  http://localhost:3000/api/imgProxy?url=https://wx1.sinaimg.cn/large/63eaf69fly1hjwmahh23bj20u014mn0w.jpg
+  return `http://localhost:${port}/api/imgProxy?url=${imgUrl}`
+}

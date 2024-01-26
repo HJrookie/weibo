@@ -44,7 +44,9 @@ model Image {
   id                  Int    @id @default(autoincrement())
   // profileInfo   Profile  @relation(fields: [profileId],references: [id])
   // profileId Int  @unique
-  url String @default("")
+  url String @default("")       // 替换后的地址 
+  originalUrl String @default("")   //图片原始地址
+  
   fileName String @default("")
   
   belongToBlog  Blog @relation(fields: [blogId],references: [id])
