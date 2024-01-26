@@ -1,6 +1,7 @@
 type getObjectType<Type> = {
   [K in keyof Type]: Type[K];
 };
+
 const weiboBlogItem = {
   "id": 1,
   "createdAt": "2024-01-24T05:46:48.842Z",
@@ -8,7 +9,15 @@ const weiboBlogItem = {
   "updatedAt": "2024-01-24T05:46:48.844Z",
   "content": "首页看到一堆感慨世事无常，还有觉得岁数大了身体不行的……\n\n要不说顺则凡，逆则仙。我没有啊！！！我这几年状态越来越好，不光是心态好，身子也越来越灵活轻盈舒服[笑cry]\n\n我妈这几天感慨好多次，去年这时候还跟我死倔，说她年纪大了练不了那些功，现在简直返老还童十岁，出去练剑还被围观拍掌呢[允悲]\n\n而且咱们这些功又不花钱（省得说我借机割韭菜[二哈]）。反正练功修道这事儿，年纪越大，差别越明显——肉眼可见地明显，不是自我安慰。算了，都是机缘。爱信信，不信走好您[作揖][作揖][作揖]",
   "isLongText": true,
-  "authorId": null
+  "authorId": null,
+  blogImages: [{
+    "id": 91,
+    "url": "https://wx3.sinaimg.cn/large/8c4c1f79ly1hlg90yhke0j235s2dce82.jpg",
+    "fileName": "NA6BftQQH.jpg",
+    "blogId": 62,
+    "createdAt": "2024-01-26T11:10:09.649Z"
+  }
+  ]
 };
 
 const UserData = {

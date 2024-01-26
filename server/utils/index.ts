@@ -38,3 +38,4 @@ export function getVvidFromCode(s: string) {
 }
 
 
+export const sleep = (t:number)=>new Promise<void>(res=>setTimeout(() => res(), t*1000))

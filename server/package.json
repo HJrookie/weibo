@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx ts-node index.ts",
+    "d": "npx ts-node index.ts",
     "g": "npx prisma generate &&  npx prisma migrate dev --name updatedb"
   },
   "keywords": [],

@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `Blog` MODIFY `blogCreateAt` BIGINT NOT NULL DEFAULT 0;

@@ -48,7 +48,9 @@ model Image {
   fileName String @default("")
   
   belongToBlog  Blog @relation(fields: [blogId],references: [id])
-  blogId Int @unique
+  blogId Int 
+  createdAt DateTime @default(now())
+
 }
 
 model Video {

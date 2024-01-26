@@ -1,5 +1,5 @@
-import { Prisma, PrismaClient, User } from "@prisma/client";
-import { getFileSize, getVvidFromCode, isVideoFile } from "../../utils";
+import { Prisma, PrismaClient, Profile, User } from "@prisma/client";
+import { getFileSize, getVvidFromCode, isVideoFile, sleep } from "../../utils";
 const fs = require("fs");
 import express, { query } from "express";
 const path = require("path");
@@ -30,6 +30,9 @@ router.post("/weibos", async (req, res) => {
         content: {
           contains: searchValue
         }
+      },
+      include:{
+        blogImages:true
       }
 
     }),
@@ -45,7 +48,9 @@ router.post("/weibos", async (req, res) => {
 
 
 
-const getBlogsByPage = async (pageArgs: { uid: string; page: number; feature: number }, user: User) => {
+const getBlogsByPage = async (pageArgs: { uid: string; page: number; feature: number }, user: (User & {
+  profile: Profile | null;
+})) => {
   // 获取微博 并且存储到数据库中
   const blogList = (await getBlogList(pageArgs)).data.data.list;
   // 区分 长博文 和 短博文
@@ -59,7 +64,7 @@ const getBlogsByPage = async (pageArgs: { uid: string; page: number; feature: nu
 
   // short insert
   shortBlogs.map(async (blog: { text: any, created_at: string }) => {
-    await checkBlog(blog.text,blog,authorArgs,user)
+    await checkBlog(blog.text, blog, authorArgs, user)
   });
   // long insert
   longBlogs.map((blog: Record<string, any>) => {
@@ -70,7 +75,7 @@ const getBlogsByPage = async (pageArgs: { uid: string; page: number; feature: nu
         .then(async (res) => {
           const blogInfo = res.data.data.longTextContent;
 
-          await checkBlog(blogInfo,blog,authorArgs ,user)
+          await checkBlog(blogInfo, blog, authorArgs, user)
 
           setTimeout(() => {
             resolve();
@@ -85,6 +90,10 @@ const getBlogsByPage = async (pageArgs: { uid: string; page: number; feature: nu
 };
 
 router.post("/syncWeibo", async (req, res) => {
+  for (let i = 0; i < 3; i++) {
+    console.log(i)
+    await sleep(1)
+  }
   const { userId } = req.body;
 
   const user = await prisma.user.findUnique({

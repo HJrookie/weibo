@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE `Profile` ADD COLUMN `blogAddress` VARCHAR(191) NOT NULL DEFAULT '',
-    ADD COLUMN `education` VARCHAR(191) NOT NULL DEFAULT '',
-    ADD COLUMN `realName` VARCHAR(191) NOT NULL DEFAULT '';

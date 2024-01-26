@@ -1,30 +1,32 @@
-import { PrismaClient, User } from "@prisma/client";
+import { PrismaClient, Profile, User } from "@prisma/client";
 import { downloadImage } from "../../api/api";
 import { downloadImageHeader } from "../../header";
 const fs = require('fs')
 const prisma = new PrismaClient();
 
 
-export const saveImage = async (user: User, blog: Record<string, any>, url: string, fileName?: string) => {
-    const _fileName = fileName ?? `${user.name}-${blog.mblogid}-${url}-${fileName}`;
+export const saveImage = async (user: (User & {
+    profile: Profile | null;
+}) | null, blog: Record<string, any>, url: string, fileName: string) => {
     await downloadImage(url,)
         .then((res: { data: any; }) => {
-            fs.writeFileSync(_fileName, res.data)
+            fs.writeFileSync(fileName, res.data)
         }).catch((err: any) => {
-            console.log(`download Image error ---> ${_fileName}`, err)
+            console.log(`download Image error ---> ${fileName}`, err)
         })
-    await prisma.
 }
 
-export const checkBlog = async (content: string, blogInfo: Record<string, any>, authorInfo: any, user: User) => {
-    const checkExist = await prisma.blog.findFirst({
+export const checkBlog = async (content: string, blogInfo: Record<string, any>, authorInfo: any, user: (User & {
+    profile: Profile | null;
+})) => {
+    let blogObj = await prisma.blog.findFirst({
         where: {
             content,
         },
     });
 
-    if (!checkExist) {
-        await prisma.blog.create({
+    if (!blogObj) {
+        blogObj = await prisma.blog.create({
             data: {
                 content,
                 isLongText: blogInfo.isLongText,
@@ -38,14 +40,26 @@ export const checkBlog = async (content: string, blogInfo: Record<string, any>, 
     if (blogInfo.pic_num <= 0) { return }
     const imageInfos = blogInfo.pic_infos ?? {};
     for (let [k, imageDetail] of Object.entries<Record<string, any>>(imageInfos)) {
-        let url = imageDetail.largest as string;
-        await saveImage(user, blogInfo, url,)
-        await prisma.image.create({data:{
-            url:imageDetail.largest.url as string,
-            fileName:
-        }})
+        let url = imageDetail.largest.url as string;
+        console.log(111111, url)
+        // const fileName = `${user.profile?.name}-${blogInfo.mblogid}-${url}`;
+        const fileName = `${blogInfo.mblogid}.jpg`;
+
+        await saveImage(user, blogInfo, url, fileName)
+        await prisma.image.create({
+            data: {
+                url: imageDetail.largest.url as string,
+                fileName,
+                belongToBlog: {
+                    connect: {
+                        id: blogObj.id
+                    }
+                }
+
+            }
+        })
     }
- 
+
 
 
     // pic_num

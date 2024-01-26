@@ -15,7 +15,7 @@ const AddOrUpdate: React.FC = (props: { onRef?: React.RefObject<any> }) => {
     };
   });
   const init = (data: Partial<BlogItem>) => {
-    setBlogData({...data})
+    setBlogData({ ...data })
 
     setIsModalOpen(true);
   };
@@ -31,8 +31,26 @@ const AddOrUpdate: React.FC = (props: { onRef?: React.RefObject<any> }) => {
   };
 
   return (
-    <Modal title="Preview" open={isModalOpen} width={900} onOk={handleCancel} onCancel={handleCancel}  destroyOnClose >
-      {isModalOpen ? <RichText content={blogData?.content ?? ''}></RichText> : ''}  
+    <Modal title="Preview" open={isModalOpen} width={900} onOk={handleCancel} onCancel={handleCancel} destroyOnClose >
+      {isModalOpen ? <RichText content={blogData?.content ?? ''}></RichText> : ''}
+
+      <Row gutter={[16, 16]}>
+        {
+          blogData?.blogImages?.map(img => {
+            return <Col span={6} key={img.id}>
+
+              <img src={img.url}  ></img>
+
+            </Col>
+          })
+        }
+
+        <div className="ttt">
+          2222222
+        </div>
+
+      </Row>
+
     </Modal>
   );
 };

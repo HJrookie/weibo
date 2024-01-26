@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createRef, useCallback, useMemo } from "react";
 import { AutoComplete, Button, Card, Cascader, Checkbox, Col, Descriptions, Divider, Form, Input, InputNumber, message, Row, Select, Tooltip } from "antd";
-import AddOrUpdate from "./add-or-update";
+import AddOrUpdate from "./detail";
 import ChooseUser from "./ChooseUsers"
 
 const { Option } = Select;

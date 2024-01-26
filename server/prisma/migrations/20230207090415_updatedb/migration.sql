@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `Video` ADD COLUMN `note` VARCHAR(191) NOT NULL DEFAULT '';
