@@ -14,7 +14,12 @@ router.post("/images", async (req, res) => {
             skip: (page - 1) * pageSize,
             take: pageSize,
             include: {
-                belongToBlog: true,
+                belongToBlog: {
+                    select: {
+                        blogImages: true,
+                        content: true
+                    }
+                }
             },
         }),
     ]);
