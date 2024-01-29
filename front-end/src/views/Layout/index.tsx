@@ -21,7 +21,7 @@ function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode,
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = (props: any) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const location = useLocation();
   const [selectedKeys, setSelectedKeys] = useState([location.pathname.slice(1) || "dashboard"]);
   const navigate = useNavigate();

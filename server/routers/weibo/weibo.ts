@@ -14,13 +14,20 @@ const router = express.Router();
 
 
 router.post("/weibos", async (req, res) => {
-  const { page, pageSize, searchValue } = req.body;
-
+  const { page, pageSize, searchValue, userId } = req.body;
+  console.log(111, userId)
   const result = await prisma.$transaction([
     prisma.blog.count({
       where: {
-        content: {
-          contains: searchValue
+        AND: {
+          content: {
+            contains: searchValue
+          },
+          ...(userId ? {
+            author: {
+              is: { id: userId }
+            }
+          } : {})
         }
       }
     }),
@@ -31,8 +38,15 @@ router.post("/weibos", async (req, res) => {
         blogCreateAt: 'desc'
       },
       where: {
-        content: {
-          contains: searchValue
+        AND: {
+          content: {
+            contains: searchValue
+          },
+          ...(userId ? {
+            author: {
+              is: { id: userId }
+            }
+          } : {})
         }
       },
       include: {

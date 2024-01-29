@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef, useCallback, useMemo } from "react";
+import React, { useState, useEffect, createRef, useCallback, useMemo, useRef } from "react";
 import { AutoComplete, Button, Card, Cascader, Checkbox, Col, Descriptions, Divider, Form, Input, InputNumber, message, Row, Select, Tooltip } from "antd";
 import BlogDetail from "./detail";
 import ChooseUser from "./ChooseUsers"
@@ -7,12 +7,12 @@ const { Option } = Select;
 import { PlusCircleOutlined, SyncOutlined, SearchOutlined } from "@ant-design/icons";
 import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { getVideos, getVieeoDetail, getWeibos, syncWeibos } from "@/api/exam";
+import { getUsers, getVideos, getVieeoDetail, getWeibos, syncWeibos } from "@/api/exam";
 import { PaperType, Status } from "@/utils/dict";
 import ActionDropdown from "@/components/ActionDropdown";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { BlogItem, StudentExamListType } from "@/utils/types";
+import { BlogItem, StudentExamListType, UserListType } from "@/utils/types";
 import { Drawer, Image } from "antd";
 import "./index.less";
 import ImagesView from "@/components/ImagesView";
@@ -31,14 +31,10 @@ const ExamList: React.FC = () => {
   const detailRef = createRef<any>();
   const chooseUserRef = createRef<any>();
 
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [detail, setDetail] = useState<{
-    [k: string]: any;
-  } | null>(null);
   const [searchValue, setSearchValue] = useState('')
-  const [visible, setVisible] = useState(false);
-
+  const [users, setUsers] = useState<UserListType[]>([])
+  const [userId, setUserId] = useState(undefined)
+  const userIdRef = useRef(userId)
 
   const addOrUpdate = (data?: BlogItem) => {
     detailRef.current?.init(data);
@@ -49,16 +45,9 @@ const ExamList: React.FC = () => {
     setPageSize(pageSize);
   };
 
-  const refresh = () => {
-    syncWeibos().then((res) => { }).catch(() => { });
-    message.info({
-      content: '请稍候!'
-    })
-  };
-
-  const getTableData = (value?: string) => {
+  const getTableData = (searchValue?: string,) => {
     setLoading(true);
-    const data = { page, pageSize, searchValue: value };
+    const data = { page, pageSize, searchValue, userId:userIdRef.current };
     getWeibos(data).then((res) => {
       setTableData(res?.data?.data ?? []);
       setTotal(res?.data?.total ?? 0);
@@ -68,13 +57,18 @@ const ExamList: React.FC = () => {
 
   useEffect(() => {
     getTableData(searchValue)
-  }, [page, pageSize]);
+  }, [page, pageSize,]);
+
+  useEffect(() => {
+    getUsers({
+      page: 1,
+      pageSize: 1000
+    }).then(res => {
+      setUsers(res?.data?.data ?? [])
+    })
+  }, [])
 
 
-  const onClose = () => {
-    setDetail(null);
-    setOpen(false);
-  };
 
 
   const columns: ColumnsType<BlogItem> = [
@@ -123,8 +117,14 @@ const ExamList: React.FC = () => {
     },
   ];
 
+  // useEffect(()=>{
+  //   userIdRef.current = userId;
+  // },[userId])
+
   const reset = () => {
     setSearchValue('')
+    setUserId(undefined)
+    userIdRef.current = undefined;
     getTableData('')
   }
 
@@ -132,14 +132,24 @@ const ExamList: React.FC = () => {
 
   return (
     <div>
-      <Row justify={"space-between"}>
+      <Row >
         <Col>
           <Input.Search placeholder=" search " value={searchValue} onChange={(e: any) => {
             setSearchValue(e.target.value ?? '')
             debouncedGetTable(e.target.value ?? "");
           }} />
         </Col>
+        <Col span={10}>
+          <Select placeholder={'请选择用户'} className="top-select" value={userId} onChange={v=>{
+            setUserId(v);
+    userIdRef.current = v;
 
+          }}>
+            {
+              users.map(user => <Option value={user.id} key={user.id}>{user.profile.name}</Option>)
+            }
+          </Select>
+        </Col>
 
         <Col>
 
@@ -147,12 +157,11 @@ const ExamList: React.FC = () => {
             {/* <Button onClick={() => refresh()}> */}
             <Button onClick={() => {
               chooseUserRef.current?.init();
-
             }}>
               同步
             </Button>
 
-            <Button onClick={() => getTableData()}>
+            <Button onClick={() => getTableData(searchValue,)}>
               查询<SearchOutlined />
             </Button>
 
