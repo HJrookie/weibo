@@ -52,7 +52,8 @@ model Image {
   belongToBlog  Blog @relation(fields: [blogId],references: [id])
   blogId Int 
   createdAt DateTime @default(now())
-
+  downloadState Int // 1 ok , 0 f   
+  uuid    String @default("")   // 从微博上保存时的 key , pic_infos 对象里的 key
 }
 
 model Video {

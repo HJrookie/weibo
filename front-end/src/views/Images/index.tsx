@@ -1,24 +1,27 @@
 import React, { useState, useEffect, createRef, useCallback, useMemo } from "react";
 import { AutoComplete, Button, Card, Cascader, Checkbox, Col, Descriptions, Divider, Form, Input, InputNumber, message, Row, Select, Tooltip } from "antd";
-import BlogDetail from "./detail";
-import ChooseUser from "./ChooseUsers"
 
 const { Option } = Select;
-import { PlusCircleOutlined, SyncOutlined, SearchOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined, SyncOutlined, SearchOutlined, CheckCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+  ExclamationCircleOutlined,
+  MinusCircleOutlined,
+   } from "@ant-design/icons";
 import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { getVideos, getVieeoDetail, getWeibos, syncWeibos } from "@/api/exam";
+import { getImages, getVideos, getVieeoDetail, getWeibos, syncWeibos } from "@/api/exam";
 import { PaperType, Status } from "@/utils/dict";
 import ActionDropdown from "@/components/ActionDropdown";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { BlogItem, StudentExamListType } from "@/utils/types";
+import { ImageItem,  } from "@/utils/types";
 import { Drawer, Image } from "antd";
 import "./index.less";
 import ImagesView from "@/components/ImagesView";
 import "react-photo-view/dist/react-photo-view.css";
 import { debounce, formatDate, parstBlogContent } from "@/utils";
-
+import BlogDetail from '../Weibos/detail'
 import type { SearchProps } from 'antd/es/input/Search';
 
 
@@ -28,20 +31,17 @@ const ExamList: React.FC = () => {
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
-  const detailRef = createRef<any>();
   const chooseUserRef = createRef<any>();
+  const detailRef = createRef<any>();
 
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const [detail, setDetail] = useState<{
     [k: string]: any;
   } | null>(null);
   const [searchValue, setSearchValue] = useState('')
-  const [visible, setVisible] = useState(false);
 
 
-  const addOrUpdate = (data?: BlogItem) => {
-    detailRef.current?.init(data);
+  const addOrUpdate = (data?: ImageItem) => {
+    detailRef.current?.init(data?.belongToBlog);
   };
 
   const handlePageChange = (page: number, pageSize: number) => {
@@ -49,17 +49,12 @@ const ExamList: React.FC = () => {
     setPageSize(pageSize);
   };
 
-  const refresh = () => {
-    syncWeibos().then((res) => { }).catch(() => { });
-    message.info({
-      content: '请稍候!'
-    })
-  };
+
 
   const getTableData = (value?: string) => {
     setLoading(true);
     const data = { page, pageSize, searchValue: value };
-    getWeibos(data).then((res) => {
+    getImages(data).then((res) => {
       setTableData(res?.data?.data ?? []);
       setTotal(res?.data?.total ?? 0);
       setLoading(false);
@@ -71,39 +66,39 @@ const ExamList: React.FC = () => {
   }, [page, pageSize]);
 
 
-  const onClose = () => {
-    setDetail(null);
-    setOpen(false);
-  };
 
-
-  const columns: ColumnsType<BlogItem> = [
+  const columns: ColumnsType<ImageItem> = [
+    {
+      title: "文件名",
+      align: "center",
+      ellipsis: true,
+      dataIndex: 'fileName',
+    },
     // {
-    //   title: "名称",
-    //   align: "center",
-    //   ellipsis: true,
+    //   title: "内容",
+    //   align: "left",
+    //   dataIndex: 'content',
+    //   render: (text, record) => {
+    //     return (
+    //       <Tooltip title={record.content} trigger="hover" >
+    //         <div className="rich-wrapper" dangerouslySetInnerHTML={{ __html: parstBlogContent(record.content) }}>
+    //         </div>
+    //       </Tooltip>
+    //     );
+    //   },
     // },
     {
-      title: "内容",
-      align: "left",
-      dataIndex: 'content',
-      render: (text, record) => {
-        return (
-          <Tooltip title={record.content} trigger="hover" >
-            <div className="rich-wrapper" dangerouslySetInnerHTML={{ __html: parstBlogContent(record.content) }}>
-            </div>
-          </Tooltip>
-        );
-      },
-    },
-    {
-      title: "创建时间",
-      dataIndex: "blogCreateAt",
+      title: "状态",
+      dataIndex: "download",
       align: "center",
       width: 200,
       render: (text, record) => {
-        return (
-          <span>{formatDate(record?.blogCreateAt ?? '')}</span>
+        return ( record.downloadState ? 
+          <Tag icon={<CheckCircleOutlined />} color="success">
+        已下载
+      </Tag> : <Tag icon={<CloseCircleOutlined />} color="default">
+        未下载
+      </Tag>
         );
       },
     },
@@ -128,29 +123,14 @@ const ExamList: React.FC = () => {
     getTableData('')
   }
 
-  const debouncedGetTable = useMemo(() => debounce(getTableData, 500), [])
 
   return (
     <div>
-      <Row justify={"space-between"}>
-        <Col>
-          <Input.Search placeholder=" search " value={searchValue} onChange={(e: any) => {
-            setSearchValue(e.target.value ?? '')
-            debouncedGetTable(e.target.value ?? "");
-          }} />
-        </Col>
-
+      <Row justify={"end"}>
 
         <Col>
 
           <Space>
-            {/* <Button onClick={() => refresh()}> */}
-            <Button onClick={() => {
-              chooseUserRef.current?.init();
-
-            }}>
-              同步
-            </Button>
 
             <Button onClick={() => getTableData()}>
               查询<SearchOutlined />
@@ -160,8 +140,6 @@ const ExamList: React.FC = () => {
               重置 <SyncOutlined />
             </Button>
 
-
-            {/* <Button onClick={() => addOrUpdate()}>新增</Button> */}
           </Space>
         </Col>
       </Row>
@@ -180,10 +158,8 @@ const ExamList: React.FC = () => {
         }}
       />
 
+<BlogDetail onRef={detailRef}></BlogDetail>
 
-      {/* @ts-ignore */}
-      <BlogDetail onRef={detailRef} ></BlogDetail>
-      <ChooseUser onRef={chooseUserRef} refresh={() => getTableData()}></ChooseUser>
     </div>
   );
 };

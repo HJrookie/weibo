@@ -26,6 +26,12 @@ export const checkBlog = async (content: string, blogInfo: Record<string, any>, 
         },
     });
 
+    // 处理赞的逻辑
+    const title = (blogInfo?.title?.text ?? '' as string)
+    if (title?.includes('赞')) {
+        content = '$zan' + title + content;
+    }
+
     if (!blogObj) {
         blogObj = await prisma.blog.create({
             data: {
@@ -45,7 +51,7 @@ export const checkBlog = async (content: string, blogInfo: Record<string, any>, 
 
         console.log(111111, url)
         // const fileName = `${user.profile?.name}-${blogInfo.mblogid}-${url}`;
-        const fileName = `${blogInfo.mblogid}.jpg`;
+        const fileName = `${blogInfo.mblogid}-${k}.jpg`;
 
         // 图片暂时不存储到本地
         // await saveImage(user, blogInfo, url, fileName)  
@@ -53,7 +59,9 @@ export const checkBlog = async (content: string, blogInfo: Record<string, any>, 
             data: {
                 url: replaceImageUrl(url),
                 originalUrl: url,
+                uuid: k,
                 fileName,
+                downloadState: 0, // 默认是没下载的
                 belongToBlog: {
                     connect: {
                         id: blogObj.id

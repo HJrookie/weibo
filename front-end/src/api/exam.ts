@@ -31,13 +31,23 @@ export function syncUser(data: Record<string, any>): Promise<CommonObject> {
     data
   });
 }
-export function syncWeibos(data :Record<string, any>): Promise<CommonObject> {
+export function syncWeibos(data: Record<string, any>): Promise<CommonObject> {
   return service({
     url: "/syncWeibo",
     method: "POST",
     data
   });
 }
+
+
+export function getImages(data: Record<string, any>): Promise<CommonObject> {
+  return service({
+    url: "/images",
+    method: "POST",
+    data
+  });
+}
+
 
 
 export function getUsers(params: any): Promise<CommonObject> {

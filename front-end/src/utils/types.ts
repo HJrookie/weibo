@@ -36,5 +36,26 @@ const UserData = {
   }
 }
 
+const imageItem = {
+  "id": 421,
+  "url": "http://localhost:3000/api/imgProxy?url=https://wx3.sinaimg.cn/large/66eec50cly1hm75b4wng9j20zu1l2top.jpg",
+  "originalUrl": "https://wx3.sinaimg.cn/large/66eec50cly1hm75b4wng9j20zu1l2top.jpg",
+  "fileName": "NDDSFnG1P-66eec50cly1hm75b4wng9j20zu1l2top.jpg",
+  "blogId": 245,
+  "createdAt": "2024-01-29T07:56:39.314Z",
+  "downloadState": 0,
+  "uuid": "66eec50cly1hm75b4wng9j20zu1l2top",
+  "belongToBlog": {
+    "id": 245,
+    "createdAt": "2024-01-29T07:56:39.213Z",
+    "blogCreateAt": "2024-01-26T09:15:20.000Z",
+    "updatedAt": "2024-01-29T07:56:39.213Z",
+    "content": "$zan她1-27赞过的微博(21)网友说：已经晚期了，如果去世了，就真的死无对证了。<br /><a href=\"//s.weibo.com/weibo?q=%23%E4%B8%AD%E5%B1%B1%E5%A4%A7%E5%AD%A6%23\" target=\"_blank\">#中山大学#</a> ，<a href=\"//s.weibo.com/weibo?q=%23%E4%B8%AD%E5%B1%B1%E5%A4%A7%E5%AD%A6%E9%9B%86%E4%BD%93%E6%82%A3%E7%99%8C%23\" target=\"_blank\">#中山大学集体患癌#</a>，<a href=\"//s.weibo.com/weibo?q=%23%E4%B8%AD%E5%B1%B1%E4%BA%8C%E9%99%A2%23\" target=\"_blank\">#中山二院#</a> ​​​",
+    "isLongText": false,
+    "authorId": 1
+  }
+}
+
 export type BlogItem = getObjectType<typeof weiboBlogItem>;
+export type ImageItem = getObjectType<typeof imageItem>;
 export type UserListType = getObjectType<typeof UserData>;

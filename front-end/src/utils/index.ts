@@ -161,10 +161,10 @@ const utils = {
 export default utils;
 
 export function formatDate(time: string) {
-  return moment(time).format('YYYY-MM-DD HH:MM')
+  return moment(time).format('YYYY-MM-DD HH:mm:ss')
 }
 
-export const parstBlogContent = (v: string | null | undefined) => {
+export const parstBlogContent = (v: string | null | undefined,) => {
   if (!v) {
     return '';
   }

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "@/views/Layout";
-import Videos from "@/views/Videos";
+import Images from "@/views/Images";
 import Weibos from "@/views/Weibos";
 import PaperList from "../views/PaperList";
 import QuestionList from "../views/QuestionList";
@@ -28,8 +28,8 @@ export const router = createHashRouter([
         element: <PaperList />,
       },
       {
-        path: "videos",
-        element: <Videos />,
+        path: "images",
+        element: <Images />,
       },
       {
         path: "weibos",

@@ -1,4 +1,4 @@
-const cookie = 'login_sid_t=1f06b58f90f1f7f7bd16759db6b2d7e7; cross_origin_proto=SSL; _s_tentry=passport.weibo.com; Apache=3466355927550.6504.1661334537529; XSRF-TOKEN=l_DSnFBZPcPDzwH_AxuMnIDl; WBtopGlobal_register_version=2022101810; UPSTREAM-V-WEIBO-COM=35846f552801987f8c1e8f7cec0e2230; ULV=1692675410333:1:1:1:3466355927550.6504.1661334537529:; UOR=,,www.google.com; SINAGLOBAL=3466355927550.6504.1661334537529; SCF=AmOk5zPMKliQpWoWuOLAiSYsHB65AciX2lt07iQy9Oq01VNvaH9i7XUs0Ct-5b4xMiiXp_AALmtY8mvXkGHDn6M.; SSOLoginState=1704333140; WBPSESS=nLYDcTTZPPS4-Kwz2riLykCEJdx2db_oUAF9VH-ms1uRzGgwM1njTnnXwY0PkscE4L_ZHbTwEzq-fdYAE5I_1zH5KHvkbAS4G3aOStmxIpavBzX88Bq-c7_T1fkdVRO6XZKaz1bs4K-3nzR-dCCfug==; ALF=1708739864; SUB=_2A25ItbBIDeRhGeNJ6VEV-SjLyzWIHXVry02ArDV8PUJbkNAGLUL-kW1NS_JDMyv4fJ_RUvS9BCRRR7dnIvC4Hp6L; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWDYrd5hSa5Pfd_qzyE4RP55JpX5KMhUgL.Fo-NeoeX1KqNeh.2dJLoI0YLxKBLBonL1h5LxKqL1-zLBozLxK-LB-BLBKBLxK.LBonLB.qLxK-L1h-LBK-LxKqLBKzLBKqLxKqL1-BLBK-t';
+const cookie = 'XSRF-TOKEN=VGMBN6ztVjqOn35uAq8Y5j-t; ALF=1709104333; SUB=_2A25Isz-dDeRhGeNJ6VEV-SjLyzWIHXVrsT1VrDV8PUJbkNAGLVKgkW1NS_JDMykHEDp4B33lzoEHNefFJTJOSVNe; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWDYrd5hSa5Pfd_qzyE4RP55JpX5KzhUgL.Fo-NeoeX1KqNeh.2dJLoI0YLxKBLBonL1h5LxKqL1-zLBozLxK-LB-BLBKBLxK.LBonLB.qLxK-L1h-LBK-LxKqLBKzLBKqLxKqL1-BLBK-t; WBPSESS=nLYDcTTZPPS4-Kwz2riLykCEJdx2db_oUAF9VH-ms1uRzGgwM1njTnnXwY0PkscE4L_ZHbTwEzq-fdYAE5I_12xm062D5aCIRE-vYJBT3mwFba6-9wO_7OzS0R4PPYRbmqCh-UMu2vrXMEluCSgMrw==';
 
 const header = {
     authority: "weibo.com",
@@ -24,7 +24,7 @@ const header = {
 export default header;
 
 
-export const downloadImageHeader =  {
+export const downloadImageHeader = {
     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
     "accept-language": "zh-CN,zh;q=0.9",
     "cache-control": "no-cache",
@@ -39,4 +39,4 @@ export const downloadImageHeader =  {
     "upgrade-insecure-requests": "1",
     "Referer": "https://weibo.com/",
     "Referrer-Policy": "strict-origin-when-cross-origin"
-  }
+}

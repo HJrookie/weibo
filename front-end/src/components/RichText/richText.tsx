@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import tinymce, { Editor } from 'tinymce'
+import "./richText.less"
 // @ts-ignore
 import { weiboFaceParse } from 'weibo-face'
 import { parstBlogContent } from '@/utils/index'
@@ -10,10 +11,18 @@ type RichTextProps = {
 export const RichText = (props: RichTextProps) => {
     const [editor, setEditor] = useState<Editor | null>(null)
     const [content, setContent] = useState<string | null>(null)
+    const [zanInfo,setZanInfo] = useState<string | null>(null)
 
     useEffect(() => {
         if (props.content) {
-            setContent(parstBlogContent(props.content));
+            if(props.content.startsWith('$zan')){
+                let index = props.content.indexOf(')')
+                setContent(parstBlogContent(props.content.slice(index+1)))
+setZanInfo(props.content.slice(4,index+1))
+            }else{
+                setContent(parstBlogContent(props.content))
+
+            }
         }
         // editor.setContent(weiboFaceParse(`${props.content}`));
     }, [])
@@ -60,7 +69,11 @@ export const RichText = (props: RichTextProps) => {
     //         }
     // }, [])
 
-    return <> <div className="rich-text" dangerouslySetInnerHTML={{ __html: content || '' }}></div>
+    return <> 
+    <div className="zan">
+{zanInfo}
+    </div>
+    <div className="rich-text" dangerouslySetInnerHTML={{ __html: content || '' }}></div>
         {/* <textarea id={"editor"}>
 
         </textarea> */}
