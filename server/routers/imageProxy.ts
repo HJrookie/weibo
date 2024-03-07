@@ -1,3 +1,4 @@
+import axios, { ResponseType } from "axios";
 import express from "express";
 var request = require('request');
 const url = require('url')
@@ -9,12 +10,15 @@ router.get('/imgProxy', function (req, res, next) {
 
     var options = {
         method: 'GET',
-        url: url,
+        url: url as string,
         headers: {
             'Referer': '',
-        }
+        },
+        responseType: "stream" as ResponseType
     };
-    request(options).pipe(res)
+    axios(options).then(response => {
+        response.data.pipe(res)
+    })
 
 });
 export default router;

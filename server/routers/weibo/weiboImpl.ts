@@ -20,17 +20,19 @@ export const saveImage = async (user: (User & {
 export const checkBlog = async (content: string, blogInfo: Record<string, any>, authorInfo: any, user: (User & {
     profile: Profile | null;
 })) => {
-    let blogObj = await prisma.blog.findFirst({
-        where: {
-            content,
-        },
-    });
+
 
     // 处理赞的逻辑
     const title = (blogInfo?.title?.text ?? '' as string)
     if (title?.includes('赞')) {
         content = '$zan' + title + content;
     }
+
+    let blogObj = await prisma.blog.findFirst({
+        where: {
+            content,
+        },
+    });
 
     if (!blogObj) {
         blogObj = await prisma.blog.create({
@@ -55,6 +57,15 @@ export const checkBlog = async (content: string, blogInfo: Record<string, any>, 
 
         // 图片暂时不存储到本地
         // await saveImage(user, blogInfo, url, fileName)  
+        const imageExit = await prisma.image.findMany({
+            where: {
+                uuid: k
+            }
+        })
+        if (imageExit.length >= 1) {
+            return
+        }
+
         await prisma.image.create({
             data: {
                 url: replaceImageUrl(url),

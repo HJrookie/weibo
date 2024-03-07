@@ -50,7 +50,7 @@ const MainLayout = (props: any) => {
     <Layout id={"layout"}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
-        <Menu theme="dark" mode="inline" defaultOpenKeys={["333"]} selectedKeys={selectedKeys} items={items} onClick={handleItemClick} />
+        <Menu theme="dark" mode="inline" defaultOpenKeys={[""]} selectedKeys={selectedKeys} items={items} onClick={handleItemClick} />
       </Sider>
       <Layout className="site-layout">
         <Header style={{ padding: 0, background: colorBgContainer }}>
