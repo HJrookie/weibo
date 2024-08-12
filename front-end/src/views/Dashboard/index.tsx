@@ -1,11 +1,21 @@
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, useRoutes } from "react-router-dom";
 import { Image } from "antd";
+import { Button, Card, Space } from "antd";
+
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   return (
     <div>
-      Dashboard
-      <Image width={200} src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+      <Card title="Dashboard" style={{ width: 300 }}>
+        <Button type="link" onClick={() => navigate("/users")}>
+          Users
+        </Button>
+        <Button type="link" onClick={() => navigate("/weibos")}>
+          Weibos
+        </Button>
+      </Card>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import "./index.less";
 import type { MenuProps } from "antd";
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-
+import logo from "@/assets/2-avatar.jpeg";
 type MenuItem = Required<MenuProps>["items"][number];
 
 function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode, children?: MenuItem[], type?: "group"): MenuItem {
@@ -40,16 +40,17 @@ const MainLayout = (props: any) => {
   } = theme.useToken();
 
   const items: MenuProps["items"] = [
-    getItem("dashboard", "dashboard", <AppstoreOutlined />),
+    getItem("Dashboard", "dashboard", <AppstoreOutlined />),
     // getItem("Navigation Two", "sub2", <AppstoreOutlined />, [getItem("Option 5", "question"), getItem("Option 6", "paper")]),
-    getItem("Navigation Three", "333", <SettingOutlined />, 
-    [ getItem("Users", "users"), getItem("Weibos", "weibos"),getItem("Images", "Images"),]),
+    getItem("Data List", "datalist", <SettingOutlined />, [getItem("Users", "users"), getItem("Weibos", "weibos"), getItem("Images", "Images")]),
   ];
 
   return (
     <Layout id={"layout"}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo" />
+      <Sider trigger={null} collapsible collapsed={collapsed} collapsedWidth="60">
+        <div className="logo-wrapper">
+          <img src={logo} className="logo" />
+        </div>
         <Menu theme="dark" mode="inline" defaultOpenKeys={[""]} selectedKeys={selectedKeys} items={items} onClick={handleItemClick} />
       </Sider>
       <Layout className="site-layout">
