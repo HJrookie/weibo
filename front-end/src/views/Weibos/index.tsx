@@ -47,7 +47,7 @@ const ExamList: React.FC = () => {
 
   const getTableData = (searchValue?: string,) => {
     setLoading(true);
-    const data = { page, pageSize, searchValue, userId:userIdRef.current };
+    const data = { page, pageSize, searchValue, userId: userIdRef.current };
     getWeibos(data).then((res) => {
       setTableData(res?.data?.data ?? []);
       setTotal(res?.data?.total ?? 0);
@@ -122,10 +122,12 @@ const ExamList: React.FC = () => {
   // },[userId])
 
   const reset = () => {
+    setPage(1)
+    setPageSize(10)
     setSearchValue('')
     setUserId(undefined)
     userIdRef.current = undefined;
-    getTableData('')
+    // getTableData('')
   }
 
   const debouncedGetTable = useMemo(() => debounce(getTableData, 500), [])
@@ -140,10 +142,9 @@ const ExamList: React.FC = () => {
           }} />
         </Col>
         <Col span={10}>
-          <Select placeholder={'请选择用户'} className="top-select" value={userId} onChange={v=>{
+          <Select placeholder={'请选择用户'} className="top-select" value={userId} onChange={v => {
             setUserId(v);
-    userIdRef.current = v;
-
+            userIdRef.current = v;
           }}>
             {
               users.map(user => <Option value={user.id} key={user.id}>{user.profile.name}</Option>)
